@@ -16,7 +16,8 @@ library(mlVAR)      # For multi-level vector autoregression (mlVAR) models
 library(MariNET)    # For MariNET analysis (specific network analysis method)
 
 # Load pre-cleaned dataset (assumes that the file clean_network.RData contains a data object named Data2)
-load("~/Documents/Data/clean_network.RData")
+# Data for this use case can be obtained from https://osf.io/erp7v.
+#load("~/Documents/Data/clean_network.RData")
 
 # Define the original variable names to investigate in the dataset
 vars <- c("Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","Q9","Q10","Q11","Q12","Q13","Q14","Q15","Q16","Q17","Q18")
