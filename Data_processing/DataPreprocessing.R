@@ -84,7 +84,7 @@ fam_history <- fam_history %>%
 
 # Merge metadata 
 
-dataframe <- merge(dataframe, case_control[,c(1,2,4)], all=TRUE)
+dataframe <- merge(participants, case_control[,c(1,2,4)], all=TRUE)
 
 dataframe <- merge(dataframe, fam_history[,c(1,8)], all=TRUE)
 
@@ -95,13 +95,13 @@ metadata <- dataframe
 dim(metadata)
 
 metadata <- metadata %>% distinct(participant_id, .keep_all = TRUE)
-calcular_na(metadata)
+
 table(metadata$diagnosis_at_baseline)
 
 metadata$diagnosis_at_baseline[metadata$diagnosis_at_baseline == "Parkinson's Disease"] <- "Idiopathic PD"
 
 
-##################ESTE DF YA TIENE MUCHA INFO Y ESTA FILTRADO#########################
+# Build clinical variables dataset
 
 clinical_data <- merge(abeta_multiple_test, MOCA[,c(1,4,43)],by.x = c("participant_id", "visit_month"), by.y =c("participant_id", "visit_month"), all=TRUE)
 
@@ -164,11 +164,11 @@ non_numeric_cols <- names(df_preparado)[3:5]
 # Grouping and calculating the mean for the numerical columns manually
 df_limpio <- df_preparado %>%
   group_by(participant_id, base_visit) %>%
-  summarise(
+  dplyr::summarise(
     visit_month = first(base_visit),
     # Apply mean by rows
     across(all_of(numeric_cols), ~ mean(.x, na.rm = TRUE)),
-    across(all_of(non_numeric_cols), first), # Mantein non numerical columns
+    across(all_of(non_numeric_cols), first), # Maintain non numerical columns
     .groups = "drop"
   )
 
