@@ -127,6 +127,13 @@ custom_labels <- c("UPDRS1", "UPDRS2", "UPDRS3", "UPDRS4", "MOCA", "Mob39",
                    "ADL39", "Emot39", "Stig39", "Social39", "Cogn39",
                    "Commu39", "Discomf39", "Schw_ADL", "ESS", "UPSIT")
 
+png("third_use_case.png", 
+    width = 2400,       
+    height = 3000,       
+    res = 300,
+    type = "cairo",
+    bg = "transparent")  
+
 # Define a custom layout matrix for plotting multiple graphs.
 # Layout matrix: 3 rows x 2 columns.
 # Graphs will be arranged as follows:
@@ -144,16 +151,20 @@ par(mar = c(0, 0, 0, 0))  # Set margins to zero
 par(cex.main = 1)         # Increase title font size
 
 # ------------------------- Plot 1: MariNET with Sex as Covariate -------------------
+edge_labels <- ifelse(abs(model_1) > 11, round(model_1, 3), NA)
+
 qgraph(model_1,
        title = "(A) MariNET using sex as covariate",
        layout = "spring",
        groups = structure_plot,
        color = c("lightgreen", "lightblue", "orange", "pink", "grey"),
+       label.cex = 1.4,
+       edge.labels = edge_labels,      
+       edge.label.cex = 0.8,    
        labels = custom_labels,
        legend = FALSE,
-       vsize = 11,
-       label.font = 1.3,
-       label.cex = 1.4)
+       vsize = 7,
+       label.font = 1)
 
 # ----------------------------- Plot 2: Legend --------------------------------------
 # Create an empty plot area for the legend.
@@ -167,53 +178,68 @@ legend("center",
        bty = "n")   # Remove legend border
 
 # ------------------ Plot 3: MariNET without Sex as Covariate -------------------------
+edge_labels <- ifelse(abs(model) > 11, round(model, 3), NA)
+
 qgraph(model,
        title = "(B) MariNET not including sex as covariate",
        layout = "spring",
        groups = structure_plot,
        color = c("lightgreen", "lightblue", "orange", "pink", "grey"),
+       label.cex = 1.4,
+       edge.labels = edge_labels,      
+       edge.label.cex = 0.8,    
        labels = custom_labels,
        legend = FALSE,
-       vsize = 11,
-       label.font = 1.3,
-       label.cex = 1.4)
+       vsize = 7,
+       label.font = 1)
 
 # ----------------- Plot 4: Difference between (A) and (B) ----------------------------
+edge_labels <- ifelse(abs(difference_models_1) > 0.01, round(difference_models_1, 3), NA)
+
 qgraph(difference_models_1,
        title = "(C) Difference between (A) and (B)",
        layout = "spring",
        groups = structure_plot,
        color = c("lightgreen", "lightblue", "orange", "pink", "grey"),
+       label.cex = 1.4,
+       edge.labels = edge_labels,      
+       edge.label.cex = 0.8,    
        labels = custom_labels,
        legend = FALSE,
-       vsize = 11,
-       label.font = 1.3,
-       label.cex = 1.4)
+       vsize = 7,
+       label.font = 1)
 
 # ----------------- Plot 5: EBICGlasso Network -----------------------------------------
+edge_labels <- ifelse(abs(network$graph) > 0.3, round(network$graph, 3), NA)
+
 qgraph(network$graph,
        title = "(D) EBICGlasso",
        layout = "spring",
        groups = structure_plot,
        color = c("lightgreen", "lightblue", "orange", "pink", "grey"),
+       label.cex = 1.4,
+       edge.labels = edge_labels,      
+       edge.label.cex = 0.8,    
        labels = custom_labels,
        legend = FALSE,
-       vsize = 11,
-       label.font = 1.3,
-       label.cex = 1.4)
+       vsize = 7,
+       label.font = 1)
 
 # -------------- Plot 6: Difference between (A) and (D) --------------------------------
+edge_labels <- ifelse(abs(difference_models_2) > 0.1, round(difference_models_2, 3), NA)
+
 qgraph(difference_models_2,
        title = "(E) Difference between (A) and (D)",
        layout = "spring",
        groups = structure_plot,
        color = c("lightgreen", "lightblue", "orange", "pink", "grey"),
+       label.cex = 1.4,
+       edge.labels = edge_labels,      
+       edge.label.cex = 0.8,    
        labels = custom_labels,
        legend = FALSE,
-       vsize = 11,
-       label.font = 1.3,
-       label.cex = 1.4)
-
+       vsize = 7,
+       label.font = 1)
 # Reset the layout to the default single plot layout.
 layout(1)
 

@@ -109,24 +109,35 @@ structure_plot <- structure %>%
   filter(varLabs %in% varLabs) %>%  # Here, adjust filter condition if necessary
   pull(community_structure)
 
+# (Optional) To save high resolution png
+png("first_use_case.png", 
+    width = 2400,       
+    height = 1800,       
+    res = 300,
+    type = "cairo",
+    bg = "transparent")  
 # Adjust graphical layout: define a 2x2 grid to display three graphs and a legend
 layout(matrix(c(1, 2,
                 3, 4), byrow = TRUE, ncol = 2), 
        widths = c(1, 1), heights = c(1, 1))
 
 # -------------------- 1. First Graph (Top-Left): MariNET -----------------------
+edge_labels <- ifelse(abs(symm_score) > 12, round(symm_score, 3), NA)
 
 graph1 <- qgraph(symm_score,
                  title = "(A) MariNET",
                  layout = "spring",
                  theme = 'colorblind',    # Use a colorblind-friendly palette
                  negDashed = FALSE,       # Do not dash negative edges
+                 edge.labels = edge_labels,      # To add label weight
+                 edge.label.cex = 0.8,    # Label weight size
+                 #edge.label.color = ifelse(abs(symm_score) > 12, "black", NA),
                  groups = gr,             # Group nodes based on pre-defined community structure
                  nodeNames = names,       # Node labels for the graph
                  legend = FALSE,          # Legend is plotted separately
                  color = node_colors,     # Use pre-defined node colors
-                 vsize = 12,              # Node size
-                 label.font = 1.3)        # Font size for node labels
+                 vsize = 7,              # Node size
+                 label.font = 1)        # Font size for node labels
 
 # ---------------------- 2. Legend (Top-Right) ----------------------------------
 # Create an empty plot space for the legend
@@ -139,30 +150,37 @@ legend("center", legend = unique(structure$community_structure), fill = unique(n
        bty = "n")         # Remove border around legend
 
 # ------------------ 3. Second Graph (Bottom-Left): mlVAR ------------------------
+edge_labels <- ifelse(abs(cont) > 0.3, round(cont, 3), NA)
 graph2 <- qgraph(cont, 
                  layout = "spring",
                  title = "(B) MlVAR", 
                  theme = 'colorblind', 
                  negDashed = FALSE, 
+                 edge.labels = edge_labels,     
+                 edge.label.cex = 0.8,    
                  groups = gr, 
                  legend = FALSE, 
                  nodeNames = names,
                  color = node_colors, 
-                 vsize = 12, 
-                 label.font = 1.3)
+                 vsize = 7, 
+                 label.font = 1)
 
 # ----------------- 4. Third Graph (Bottom-Right): EBICGlasso ---------------------
+edge_labels <- ifelse(abs(network$graph) > 0.3, round(network$graph, 3), NA)
 graph3 <- qgraph(network$graph,
                  title = "(C) EBICGlasso",
                  layout = "spring",
                  theme = 'colorblind', 
                  negDashed = FALSE,
+                 edge.labels = edge_labels,     
+                 edge.label.cex = 0.8,    
                  groups = gr, 
                  nodeNames = names,
                  legend = FALSE,
                  color = node_colors, 
-                 vsize = 12, 
-                 label.font = 1.3)
+                 vsize = 7, 
+                 label.font = 1)
 
 # Reset the plotting layout back to the default (single plot layout)
+dev.off()
 layout(1)

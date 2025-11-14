@@ -7,6 +7,8 @@ library("tidyr")
 
 ##1. DATA READING 
 
+setwd("~/Documents/Parkinson")
+
 participants <- read.csv("clinical_metadata_v4_2023/releases_2023_v4release_1027_amp_pd_participants.csv")
 duplicates <- read.csv("clinical_metadata_v4_2023/releases_2023_v4release_1027_amp_pd_participant_wgs_duplicates.csv")
 case_control <- read.csv("clinical_metadata_v4_2023/releases_2023_v4release_1027_amp_pd_case_control.csv")
