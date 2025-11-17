@@ -207,5 +207,18 @@ qgraph(difference_models,
 layout(1)
 
 dev.off()
+
+# Comparison metrics 
+
+W_mari   <- normalization(model)
+W_glasso  <- network$graph
+W_dif <- difference_models
+
+
+metrics <- compare_three_networks(W_mari, W_glasso, W_dif)
+
+print(metrics$PairwiseMetrics)
+
+print(metrics$TopologicalMetrics)
          
          

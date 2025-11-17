@@ -184,3 +184,18 @@ graph3 <- qgraph(network$graph,
 # Reset the plotting layout back to the default (single plot layout)
 dev.off()
 layout(1)
+
+
+# Comparison metrics 
+
+W_mari   <- normalization(symm_score)
+W_mlvar  <- cont
+W_glasso <- network$graph
+
+
+metrics <- compare_three_networks(W_mari, W_mlvar, W_glasso)
+    
+print(metrics$PairwiseMetrics)
+  
+print(metrics$TopologicalMetrics)
+    

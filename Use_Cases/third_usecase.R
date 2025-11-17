@@ -245,3 +245,14 @@ layout(1)
 
 # If saving the plot as PNG, close the device.
 dev.off()
+
+W_mari   <- normalization(model_1)
+W_mari_1  <- normalization(model)
+W_glasso <- network$graph
+
+
+metrics <- compare_three_networks(W_mari, W_mari_1, W_glasso)
+
+print(metrics$PairwiseMetrics)
+
+print(metrics$TopologicalMetrics)
