@@ -146,20 +146,24 @@ par(mar = c(0, 0, 0, 0))  # Set margins to zero
 par(cex.main = 1)         # Increase title font size
 
 # ------------------------- Plot 1: MariNET Network ------------------------------
-edge_labels <- ifelse(abs(model) > 10, round(model, 3), NA)
+edge_labels <- ifelse(abs(model) > 11, round(model, 2), NA)
 edge_labels[5,14] = edge_labels[14,5] <- round(model[5,14],3) # to print specific interaction
+edge_label_colors <- ifelse(edge_labels > 0, "#33CC33",
+                            ifelse(edge_labels < 0, "red", "black"))
 
 qgraph(model,
        title = "(A) MariNET",
        layout = "spring",
        groups = structure_plot,
        color = c("lightgreen", "lightblue", "orange", "pink", "grey"),
-       edge.labels = edge_labels,      
-       edge.label.cex = 0.8,    
-       labels = custom_labels,
-       legend = FALSE,
-       vsize = 7,
-       label.font = 1)
+       edge.labels = edge_labels,     
+       edge.label.cex = 1,   
+       edge.label.font = 2,         # negrita
+       edge.label.color = edge_label_colors,
+       legend = FALSE, 
+       nodeNames = names,
+       vsize = 7, 
+       label.cex = 1.2)      
 
 # ----------------------------- Plot 2: Legend -----------------------------------
 # Create an empty plot area for the legend
@@ -173,22 +177,28 @@ legend("center",
        bty = "n")    # Remove the legend border
 
 # ----------------------- Plot 3: EBICGlasso Network -------------------------------
-edge_labels <- ifelse(abs(network$graph) > 0.3, round(network$graph, 3), NA)
+edge_labels <- ifelse(abs(network$graph) > 0.3, round(network$graph, 2), NA)
+edge_label_colors <- ifelse(edge_labels > 0, "#33CC33",
+                            ifelse(edge_labels < 0, "red", "black"))
 
 qgraph(network$graph,
        title = "(B) EBICGlasso",
        layout = "spring",
        groups = structure_plot,
        color = c("lightgreen", "lightblue", "orange", "pink", "grey"),
-       edge.labels = edge_labels,      
-       edge.label.cex = 0.8,    
-       labels = custom_labels,
-       legend = FALSE,
-       vsize = 7,
-       label.font = 1)
+       edge.labels = edge_labels,     
+       edge.label.cex = 1,   
+       edge.label.font = 2,         # negrita
+       edge.label.color = edge_label_colors,
+       legend = FALSE, 
+       nodeNames = names,
+       vsize = 7, 
+       label.cex = 1.2)      
 
 # ------------- Plot 4: Difference Between Methods Network -----------------------
-edge_labels <- ifelse(abs(difference_models) > 0.1, round(difference_models, 3), NA)
+edge_labels <- ifelse(abs(difference_models) > 0.1, round(difference_models, 2), NA)
+edge_label_colors <- ifelse(edge_labels > 0, "#33CC33",
+                            ifelse(edge_labels < 0, "red", "black"))
 
 
 qgraph(difference_models,
@@ -196,12 +206,14 @@ qgraph(difference_models,
        layout = "spring",
        groups = structure_plot,
        color = c("lightgreen", "lightblue", "orange", "pink", "grey"),
-       edge.labels = edge_labels,      
-       edge.label.cex = 0.8,    
-       labels = custom_labels,
-       legend = FALSE,
-       vsize = 7,
-       label.font = 1)
+       edge.labels = edge_labels,     
+       edge.label.cex = 1,   
+       edge.label.font = 2,         # negrita
+       edge.label.color = edge_label_colors,
+       legend = FALSE, 
+       nodeNames = names,
+       vsize = 7, 
+       label.cex = 1.2)      
 
 # Reset the layout to the default single plot
 layout(1)

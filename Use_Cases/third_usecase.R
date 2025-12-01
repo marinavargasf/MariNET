@@ -128,9 +128,9 @@ custom_labels <- c("UPDRS1", "UPDRS2", "UPDRS3", "UPDRS4", "MOCA", "Mob39",
                    "Commu39", "Discomf39", "Schw_ADL", "ESS", "UPSIT")
 
 png("third_use_case.png", 
-    width = 2400,       
-    height = 3000,       
-    res = 300,
+    width = 4800,       
+    height = 6000,       
+    res = 600,
     type = "cairo",
     bg = "transparent")  
 
@@ -141,7 +141,6 @@ png("third_use_case.png",
 layout_matrix <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 3, ncol = 2, byrow = TRUE)
 
 # Uncomment the next line to save the plot as a PNG file.
-# png("third_use_case_full.png", width = 800, height = 1000, res = 150)  # Adjust dimensions and resolution as needed
 
 # Set up the custom layout for plotting.
 layout(layout_matrix)
@@ -151,20 +150,24 @@ par(mar = c(0, 0, 0, 0))  # Set margins to zero
 par(cex.main = 1)         # Increase title font size
 
 # ------------------------- Plot 1: MariNET with Sex as Covariate -------------------
-edge_labels <- ifelse(abs(model_1) > 11, round(model_1, 3), NA)
+edge_labels <- ifelse(abs(model_1) > 11, round(model_1, 2), NA)
+edge_label_colors <- ifelse(edge_labels > 0, "#33CC33",
+                            ifelse(edge_labels < 0, "red", "black"))
+
 
 qgraph(model_1,
        title = "(A) MariNET using sex as covariate",
        layout = "spring",
        groups = structure_plot,
        color = c("lightgreen", "lightblue", "orange", "pink", "grey"),
-       label.cex = 1.4,
-       edge.labels = edge_labels,      
-       edge.label.cex = 0.8,    
-       labels = custom_labels,
-       legend = FALSE,
-       vsize = 7,
-       label.font = 1)
+       edge.labels = edge_labels,     
+       edge.label.cex = 0.8,   
+       edge.label.font = 2,         # negrita
+       edge.label.color = edge_label_colors,
+       legend = FALSE, 
+       nodeNames = names,
+       vsize = 7, 
+       label.cex = 1.2)      
 
 # ----------------------------- Plot 2: Legend --------------------------------------
 # Create an empty plot area for the legend.
@@ -178,68 +181,82 @@ legend("center",
        bty = "n")   # Remove legend border
 
 # ------------------ Plot 3: MariNET without Sex as Covariate -------------------------
-edge_labels <- ifelse(abs(model) > 11, round(model, 3), NA)
+edge_labels <- ifelse(abs(model) > 11, round(model, 2), NA)
+edge_label_colors <- ifelse(edge_labels > 0, "#33CC33",
+                            ifelse(edge_labels < 0, "red", "black"))
+
 
 qgraph(model,
        title = "(B) MariNET not including sex as covariate",
        layout = "spring",
        groups = structure_plot,
        color = c("lightgreen", "lightblue", "orange", "pink", "grey"),
-       label.cex = 1.4,
-       edge.labels = edge_labels,      
-       edge.label.cex = 0.8,    
-       labels = custom_labels,
-       legend = FALSE,
-       vsize = 7,
-       label.font = 1)
+       edge.labels = edge_labels,     
+       edge.label.cex = 0.8,   
+       edge.label.font = 2,         # negrita
+       edge.label.color = edge_label_colors,
+       legend = FALSE, 
+       nodeNames = names,
+       vsize = 7, 
+       label.cex = 1.2)      
 
 # ----------------- Plot 4: Difference between (A) and (B) ----------------------------
-edge_labels <- ifelse(abs(difference_models_1) > 0.01, round(difference_models_1, 3), NA)
+edge_labels <- ifelse(abs(difference_models_1) > 0.02, round(difference_models_1, 2), NA)
+edge_label_colors <- ifelse(edge_labels > 0, "#33CC33",
+                            ifelse(edge_labels < 0, "red", "black"))
+
 
 qgraph(difference_models_1,
        title = "(C) Difference between (A) and (B)",
        layout = "spring",
        groups = structure_plot,
        color = c("lightgreen", "lightblue", "orange", "pink", "grey"),
-       label.cex = 1.4,
-       edge.labels = edge_labels,      
-       edge.label.cex = 0.8,    
-       labels = custom_labels,
-       legend = FALSE,
-       vsize = 7,
-       label.font = 1)
+       edge.labels = edge_labels,     
+       edge.label.cex = 0.8,   
+       edge.label.font = 2,         # negrita
+       edge.label.color = edge_label_colors,
+       legend = FALSE, 
+       nodeNames = names,
+       vsize = 7, 
+       label.cex = 1.2)      
 
 # ----------------- Plot 5: EBICGlasso Network -----------------------------------------
-edge_labels <- ifelse(abs(network$graph) > 0.3, round(network$graph, 3), NA)
+edge_labels <- ifelse(abs(network$graph) > 0.2, round(network$graph, 2), NA)
+edge_label_colors <- ifelse(edge_labels > 0, "#33CC33",
+                            ifelse(edge_labels < 0, "red", "black"))
 
 qgraph(network$graph,
        title = "(D) EBICGlasso",
        layout = "spring",
        groups = structure_plot,
        color = c("lightgreen", "lightblue", "orange", "pink", "grey"),
-       label.cex = 1.4,
-       edge.labels = edge_labels,      
-       edge.label.cex = 0.8,    
-       labels = custom_labels,
-       legend = FALSE,
-       vsize = 7,
-       label.font = 1)
+       edge.labels = edge_labels,     
+       edge.label.cex = 0.8,   
+       edge.label.font = 2,         # negrita
+       edge.label.color = edge_label_colors,
+       legend = FALSE, 
+       nodeNames = names,
+       vsize = 7, 
+       label.cex = 1.2)      
 
 # -------------- Plot 6: Difference between (A) and (D) --------------------------------
-edge_labels <- ifelse(abs(difference_models_2) > 0.1, round(difference_models_2, 3), NA)
+edge_labels <- ifelse(abs(difference_models_2) > 0.13, round(difference_models_2, 2), NA)
+edge_label_colors <- ifelse(edge_labels > 0, "#33CC33",
+                            ifelse(edge_labels < 0, "red", "black"))
 
 qgraph(difference_models_2,
        title = "(E) Difference between (A) and (D)",
        layout = "spring",
        groups = structure_plot,
        color = c("lightgreen", "lightblue", "orange", "pink", "grey"),
-       label.cex = 1.4,
-       edge.labels = edge_labels,      
-       edge.label.cex = 0.8,    
-       labels = custom_labels,
-       legend = FALSE,
-       vsize = 7,
-       label.font = 1)
+       edge.labels = edge_labels,     
+       edge.label.cex = 0.8,   
+       edge.label.font = 2,         # negrita
+       edge.label.color = edge_label_colors,
+       legend = FALSE, 
+       nodeNames = names,
+       vsize = 7, 
+       label.cex = 1.2)      
 # Reset the layout to the default single plot layout.
 layout(1)
 
